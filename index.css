@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+:root {
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --legal-gold: #c5a059;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0d0d0d;
+  color: #e5e5e5;
+  overflow-x: hidden;
+}
+
+.font-serif { font-family: var(--font-serif); }
+.bg-legal-gold { background-color: var(--legal-gold); }
+.text-legal-gold { color: var(--legal-gold); }
+.border-legal-gold { border-color: var(--legal-gold); }
+
+/* Interactive Precision Grid - Spotlight Edition */
+.interactive-grid-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* This layer contains the grid but is masked by the cursor position */
+.grid-revealer {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(197, 160, 89, 0.4) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(197, 160, 89, 0.4) 1.5px, transparent 1.5px);
+  background-size: 40px 40px;
+  /* The mask makes the grid visible ONLY around the mouse */
+  -webkit-mask-image: radial-gradient(
+    300px circle at var(--mouse-x) var(--mouse-y),
+    black 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    transparent 80%
+  );
+  mask-image: radial-gradient(
+    300px circle at var(--mouse-x) var(--mouse-y),
+    black 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    transparent 80%
+  );
+}
+
+/* Ambient light pulse for the cursor to add "glow" to the revealed grid */
+.ambient-mouse-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    300px circle at var(--mouse-x) var(--mouse-y),
+    rgba(197, 160, 89, 0.08),
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Smooth transitions for all interactive elements */
+.transition-legal {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0d0d0d; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--legal-gold); }
+
+/* Nav Link Underline Effect */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -4px;
+  left: 50%;
+  background-color: var(--legal-gold);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
